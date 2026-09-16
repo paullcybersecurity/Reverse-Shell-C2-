@@ -86,6 +86,7 @@ I expected, because it is the central finding of this particular lab, rather tha
 ## Triage Note
 
 ```
+yaml
 Alert: Reverse Shell / C2 Connection Identified (via manual pcap review — no automated alert exists for this)
 Host: paull-analyst (Ubuntu-Victim)
 Destination IP: 192.168.142.139
