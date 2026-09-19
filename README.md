@@ -106,9 +106,7 @@ Next Steps:
 
 > At 2026-09-15 04:47, host paull-analyst initiated an outbound TCP connection to paull-attacker-kali on port 4444, consistent with an interactive reverse shell. The connection remained open for the duration of a command sequence including `whoami`, `id`, `pwd`, `hostname`, and file enumeration commands, all observed in plaintext via packet capture. No corresponding evidence of this activity was found in the SIEM (Kibana/Elasticsearch), as the current log sources (auth, syslog, Apache) do not capture this type of host-level process activity.
 
-## Key Takeaway
 
-This lab intentionally demonstrates a detection gap rather than a detection success, and that distinction is itself the value of the exercise. The SSH brute-force lab showed that encrypted traffic can still be detected through host-log correlation; the SQL injection lab showed that plaintext web traffic logs the attack payload directly. This reverse shell lab shows a third case: an attack that produces **no logs at all** in a typical log-forwarding setup, because it never touches an application that logs (SSH daemon, web server) — it operates at the OS process/network level instead.
 
 **The fix :** closing this gap requires either (1) host-based process monitoring — auditd rules for suspicious process execution (e.g., `bash` spawning with unusual parent processes, or connections to `/dev/tcp/`), or a Sysmon-for-Linux equivalent, shipped into the same SIEM pipeline, or (2) network-level detection, such as an IDS (Suricata/Zeek) watching for outbound connections to non-standard ports or known C2 behavior patterns, rather than relying on host logs alone.
 
